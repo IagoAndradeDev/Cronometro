@@ -82,5 +82,5 @@ main {
 }
 
 .start:hover , .pause:hover, .reset:hover {
-    background-color: #292929;
+    background-color: #292929 !important;
 }
