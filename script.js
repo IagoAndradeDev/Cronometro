@@ -6,16 +6,17 @@ const pause = document.querySelector(".pause")
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
-
 let timer = false
 let segundos = 0
 
 async function iniciarTimer(){
-    console.log("Iniciando")
+    console.log("Iniciando!")
+    start.style.display = "none"
+    pause.style.display = ""
     timer = true
     while (timer) {
         segundos++
-        time.innerHTML = segundos
+        time.innerHTML = formatarSegundos(segundos)
         await sleep(1000)
     }
 }
@@ -23,14 +24,24 @@ async function iniciarTimer(){
 start.addEventListener("click", iniciarTimer)
 
 pause.addEventListener("click", function() {
-    console.log("Pause feito com sucesso!")
-    timer = false
+    
+    if (pause.innerHTML == "Pause") {
+        console.log("Pause feito com sucesso!")
+        pause.innerHTML = "Play"
+        timer = false
+    } else {
+        console.log("Continuando seu timer!")
+        pause.innerHTML = "Pause"
+        timer = true
+        iniciarTimer()
+    }
 })
 
 reset.addEventListener("click", function() {
-    time.innerHTML = "0"
     segundos = 0
+    time.innerHTML = formatarSegundos(segundos)
     console.log("Timer resetado com sucesso!")
+    start.style.display = "none"
 })
 
 
@@ -43,5 +54,5 @@ function formatarSegundos(totalSegundos) {
   const m = String(minutos).padStart(2, '0');
   const s = String(segundos).padStart(2, '0');
 
-  return horas > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+  return horas > 0 ? `${h}:${m}:${s}` : `${h}:${m}:${s}`;
 }
